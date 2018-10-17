@@ -1,6 +1,9 @@
 <?php
 //插入排序
 require("common.php");
+//最坏情况 时间复杂度O(N^2)
+//最优情况 时间复杂度O(N)
+//绝大部分情况比选择排序快，对于随机无重复数组插入排序比选择排序快常数倍
 class Insertion
 {
     public static function asc($arr)
