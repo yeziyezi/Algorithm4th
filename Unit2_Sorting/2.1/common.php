@@ -7,6 +7,14 @@ function dumpArr($arr){
     $output.="]";
     return $output."\n";
 }
+function dumpArrNoLn(){
+    $output="[ ";
+    foreach($arr as $num){
+        $output.="$num ";
+    }
+    $output.="]";
+    return $output;
+}
 class Timer{
     private static $timeStart=0;
     public static function start(){
