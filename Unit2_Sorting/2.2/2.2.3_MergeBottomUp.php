@@ -1,2 +1,3 @@
 <?php
-//todo
+require("common.php");
+ 

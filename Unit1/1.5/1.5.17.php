@@ -53,7 +53,6 @@ $erdosRenyi=new ErdosRenyi($pointTotalCount);
 $timeSpend=0.0;
 $timeStart=microtime(true);
 $connectionCount=0;
-$sameTimes=0;
 while(true){
     $p=rand(0,$pointTotalCount-1);
     $q=rand(0,$pointTotalCount-1);
@@ -62,7 +61,6 @@ while(true){
     if($erdosRenyi->connected($p,$q))
         continue;
     $erdosRenyi->union($p,$q);
-    $sameTimes=0;
     $connectionCount=$erdosRenyi->connectionCount();
     echo "total connection: $connectionCount|".(microtime(true)-$timeStart+$timeSpend)."seconds\r";//动态显示连接数的增长以及花费时间
     if($erdosRenyi->componentCount()==1){//当分量为1时全部连接上
