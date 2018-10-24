@@ -27,7 +27,7 @@ class MergeBU{
 
         for($size=1;$size<$len;$size*=2){
             for($low=0;$low<$len-$size;$low+=($size*2)){//low是将要合并的两个小数组的最小索引
-                self::merge($arr,$low,$low+$size-1,$low+$size*2-1,$temp);//在merge时，实际上是将$low~$mid作为一个数组，$mid+1~$high作为另一个数组,并且绝大多数两个数组都是相等的
+                self::merge($arr,$low,$low+$size-1,min($low+$size*2-1,$len-1),$temp);//在merge时，实际上是将$low~$mid作为一个数组，$mid+1~$high作为另一个数组,并且绝大多数两个数组都是相等的
                 //例 1,2,3,4,5,6,7,8 low=1,mid=4,high=8
             }
         }
