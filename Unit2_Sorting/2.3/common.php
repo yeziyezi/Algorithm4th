@@ -20,7 +20,7 @@ function copyArr(array $src,int $low,int $high=null){
     }
     return $dst;
 }
-function swap($a, $b,array $arr=null)
+function swap($a, $b,array &$arr=null)
 {
     if($arr!=null){
         $t=$arr[$a];
