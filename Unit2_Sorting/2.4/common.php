@@ -45,8 +45,8 @@ function showCompleteBinaryTree(array $arr){
     }else{
         $d=$depth;
     }
-    echo "depth:$depth\n";
-    echo "d:$d\n";
+    // echo "depth:$depth\n";
+    // echo "d:$d\n";
     for($i=1;$i<=$depth;$i++){   
         $leftSpace=2**($d-$i)-1;
         if($leftSpace<0)$leftSpace=0;
