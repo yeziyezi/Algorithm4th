@@ -1,30 +1,22 @@
 <?php
-require("common.php");
-class TopM{
-    private $limit=0;
+require_once("common.php");
+class MinPQ{
     private $data=[0=>0];
     private $total=0;
-    private $lessRule=null;
-    function __construct(int $limit,callable $lessRule)
+    private $compareRule=null;
+    function __construct(callable $compareRule)
     {
-        $this->limit=$limit;
-        $this->lessRule=$lessRule;
+        $this->compareRule=$compareRule;
     }
     private function less(int $i,int $j){
-        //copy the closure object to use
-        //if use $this->lessRule(...) directly
-        //You will got a fatal error:call to undefined method
-        $lr=$this->lessRule;
-        return $lr($this->data[$i],$this->data[$j]);
+        $compareRule=$this->compareRule;
+        return $compareRule($this->data[$i],$this->data[$j])<0;
     }
     public function insert($data){
         $this->data[++$this->total]=$data;
         $this->swim($this->total);
-        if($this->total>$this->limit){
-            $this->deleteMin();
-        }
     }
-    private function deleteMin(){
+    public function deleteMin(){
         $minValue=$this->minValue();
         $this->data[1]=$this->data[$this->total];
         unset($this->data[$this->total--]);
@@ -63,15 +55,44 @@ class TopM{
         // showCompleteBinaryTree($this->data);
         echo dumpArrln($this->data,1);
     }
+    public function isEmpty(){
+        return $this->total===0;
+    }
+}
+class CubeSum{
+    public $i;
+    public $j;
+    public $sum;
+    public function __construct(int $i,int $j){
+        $this->i=$i;
+        $this->j=$j;
+        $this->sum=$i**3+$j**3;
+    }
+    public static function compareRule(){
+        return function(CubeSum $a,CubeSum $b){
+            $aSum=$a->sum;
+            $bSum=$b->sum;
+            if($aSum>$bSum) return 1;
+            if($aSum===$bSum) return 0;
+            if($aSum<$bSum) return -1;
+        };
+    }
+    public function toString(){
+        return $this->sum.'='.$this->i.'^3+'.$this->j.'^3';
+    }
 }
 //test
-$TopM=new TopM(26,function(string $data1,string $data2){
-    return $data1<$data2;
-});
-$arr=range('A','Z');//[A,B,C,...,Z]
-//suggest $i less than 16 ,or the screen width will not enough
-for($i=0;$i<100;$i++){
-    $TopM->insert($arr[array_rand($arr)]);
-    $TopM->show();
-    echo "\n";
+$pq=new MinPQ(CubeSum::compareRule());
+$number=$argv[1];
+for($i=0;$i<$number;$i++){
+    $pq->insert(new CubeSum($i,0));
+}
+$temp=[];
+$sum=0;
+while(!$pq->isEmpty()){
+    $cs= $pq->deleteMin();
+    echo $cs->toString(),"\n";
+    if($cs->j<$number){
+        $pq->insert(new CubeSum($cs->i,$cs->j+1));
+    }
 }
