@@ -1,0 +1,8 @@
+apple.com
+google.com
+ee.princeton.edu
+princeton.edu
+cs.princeton.edu
+bolle.cs.princeton.edu
+cnn.com
+www.cs.princeton.edu
